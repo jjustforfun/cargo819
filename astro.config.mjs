@@ -29,8 +29,29 @@ export default defineConfig({
       filter: (page) => !page.includes('/api/')
     })
   ],
+  server: {
+    host: '0.0.0.0',
+    port: 4321
+  },
   vite: {
-    plugins: [tailwindcss()]
+    plugins: [tailwindcss()],
+    server: {
+      host: '0.0.0.0',
+      port: 4321,
+      strictPort: true,
+      cors: true,
+      hmr: {
+        clientPort: 4321
+      },
+      // Vite 5 host allowlist — allow E2B preview hosts
+      // @ts-ignore
+      allowedHosts: ['all']
+    },
+    preview: {
+      host: '0.0.0.0',
+      port: 4321,
+      strictPort: true
+    }
   },
   image: {
     service: { entrypoint: 'astro/assets' }
