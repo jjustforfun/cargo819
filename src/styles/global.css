@@ -1,0 +1,85 @@
+@import "tailwindcss";
+
+/* Tailwind v4 theme customization */
+@theme {
+  --color-navy-950: #050E1F;
+  --color-navy-900: #0B1D3A;
+  --color-navy-800: #122A4F;
+  --color-navy-700: #1A3560;
+  --color-accent-500: #FF6A00;
+  --color-accent-600: #E55F00;
+  --color-accent-400: #FF8533;
+  --color-ink-900: #0F172A;
+  --color-ink-700: #334155;
+  --color-ink-500: #64748B;
+  --color-surface-50: #F8FAFC;
+  --color-surface-100: #F1F5F9;
+  --color-line-200: #E2E8F0;
+
+  --font-display: "Manrope", system-ui, -apple-system, sans-serif;
+  --font-body: "Inter", system-ui, -apple-system, sans-serif;
+
+  --radius-card: 16px;
+  --radius-pill: 999px;
+}
+
+/* Base */
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 88px;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+  body {
+    font-family: var(--font-body);
+    color: var(--color-ink-900);
+    background: white;
+    line-height: 1.6;
+  }
+  h1,h2,h3,h4 {
+    font-family: var(--font-display);
+    letter-spacing: -0.02em;
+    line-height: 1.1;
+  }
+  :focus-visible {
+    outline: 2px solid var(--color-accent-500);
+    outline-offset: 3px;
+    border-radius: 2px;
+  }
+  ::selection {
+    background: var(--color-accent-500);
+    color: white;
+  }
+}
+
+/* Utilities */
+@layer utilities {
+  .container-premium {
+    width: min(1280px, calc(100% - 32px));
+    margin-inline: auto;
+  }
+  @media (min-width: 768px) {
+    .container-premium { width: min(1280px, calc(100% - 48px)); }
+  }
+  .text-balance { text-wrap: balance; }
+  .glass {
+    background: rgba(255,255,255,0.08);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(255,255,255,0.12);
+  }
+}
+
+/* Custom scrollbar premium */
+::-webkit-scrollbar { width: 10px; height: 10px; }
+::-webkit-scrollbar-track { background: #F1F5F9; }
+::-webkit-scrollbar-thumb { background: #CBD5E1; border-radius: 999px; border: 2px solid #F1F5F9; }
+::-webkit-scrollbar-thumb:hover { background: #94A3B8; }

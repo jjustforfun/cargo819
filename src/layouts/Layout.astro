@@ -1,0 +1,165 @@
+---
+import '../styles/global.css';
+
+interface Props {
+  title: string;
+  description: string;
+  lang: 'ru' | 'en';
+  canonical: string;
+  ogImage?: string;
+}
+
+const { title, description, lang, canonical, ogImage = '/images/hero-banner.jpg' } = Astro.props as Props;
+const site = Astro.site?.toString() ?? 'https://cargo819.ru';
+const alternateRu = site.replace(/\/$/, '') + '/';
+const alternateEn = site.replace(/\/$/, '') + '/en/';
+const xDefault = alternateRu;
+const jsonLdLocalBusiness = lang === 'ru' ? {
+  "@context": "https://schema.org",
+  "@type": "LogisticsService",
+  "@id": "https://cargo819.ru/#organization",
+  "name": "CARGO 819",
+  "alternateName": "Карго 819",
+  "url": "https://cargo819.ru",
+  "logo": "https://cargo819.ru/favicon.svg",
+  "image": "https://cargo819.ru/images/hero-banner.jpg",
+  "description": description,
+  "telephone": "+7-965-069-31-73",
+  "email": "info@cargo819.ru",
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "ул. Советская 32",
+    "addressLocality": "Минеральные Воды",
+    "addressRegion": "Ставропольский край",
+    "postalCode": "357202",
+    "addressCountry": "RU"
+  },
+  "areaServed": [
+    {"@type": "City","name":"Пятигорск"},
+    {"@type": "City","name":"Кисловодск"},
+    {"@type": "City","name":"Минеральные Воды"},
+    {"@type": "City","name":"Ессентуки"},
+    {"@type": "City","name":"Железноводск"},
+    {"@type": "City","name":"Георгиевск"},
+    {"@type": "City","name":"Ставрополь"},
+    {"@type": "Country","name":"Россия"}
+  ],
+  "geo": {"@type":"GeoCoordinates","latitude":44.2105,"longitude":43.1356},
+  "openingHours": "Mo-Sa 09:00-19:00",
+  "priceRange": "$$",
+  "foundingDate": "2004",
+  "aggregateRating": {"@type":"AggregateRating","ratingValue":"4.9","reviewCount":"312"}
+} : {
+  "@context": "https://schema.org",
+  "@type": "LogisticsService",
+  "name": "CARGO 819",
+  "url": "https://cargo819.ru/en/",
+  "telephone": "+7-965-069-31-73",
+  "address": {"@type":"PostalAddress","addressLocality":"Mineralnye Vody","addressRegion":"Stavropol Krai","addressCountry":"RU"},
+  "areaServed": ["Pyatigorsk","Kislovodsk","Mineralnye Vody","Essentuki"],
+  "description": description
+};
+
+const jsonLdFAQ = {
+  "@context":"https://schema.org",
+  "@type":"FAQPage",
+  "mainEntity":[
+    {"@type":"Question","name": lang==='ru' ? "Сколько стоит 1 кг из Китая в КМВ?" : "How much is 1 kg from China to KMV?","acceptedAnswer":{"@type":"Answer","text": lang==='ru' ? "От $1.2/кг авто (от 50 кг) и $0.85/кг ЖД (от 300 кг). Точный расчёт за 15 минут." : "From $1.2/kg road (50kg+) and $0.85/kg rail (300kg+). Quote in 15 min."}},
+    {"@type":"Question","name": lang==='ru' ? "Какие сроки доставки?" : "What are delivery times?","acceptedAnswer":{"@type":"Answer","text": lang==='ru' ? "Авто 12–18 дней, ЖД 18–25, экспресс 5–8 дней." : "Road 12–18 days, rail 18–25, express 5–8 days."}},
+    {"@type":"Question","name": lang==='ru' ? "Делаете белую растаможку?" : "Do you do white customs?","acceptedAnswer":{"@type":"Answer","text": lang==='ru' ? "Да, белая и карго — как выгоднее." : "Yes, both white and cargo."}}
+  ]
+};
+
+const jsonLdBreadcrumb = lang === 'ru' ? {
+  "@context":"https://schema.org",
+  "@type":"BreadcrumbList",
+  "itemListElement":[{"@type":"ListItem","position":1,"name":"Главная","item":"https://cargo819.ru/"}]
+} : {
+  "@context":"https://schema.org",
+  "@type":"BreadcrumbList",
+  "itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://cargo819.ru/en/"}]
+};
+---
+
+<!doctype html>
+<html lang={lang} dir="ltr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    <link rel="alternate" hreflang="ru" href={alternateRu} />
+    <link rel="alternate" hreflang="en" href={alternateEn} />
+    <link rel="alternate" hreflang="x-default" href={xDefault} />
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+    <meta name="author" content="CARGO 819" />
+    <meta name="theme-color" content="#0B1D3A" />
+    <meta name="format-detection" content="telephone=yes" />
+    <meta name="geo.region" content="RU-STA" />
+    <meta name="geo.placename" content="Mineralnye Vody" />
+    <meta name="geo.position" content="44.2105;43.1356" />
+    <meta name="ICBM" content="44.2105, 43.1356" />
+    <!-- GEO for AI Search (GEO optimization) -->
+    <meta name="ai:region" content="Кавказские Минеральные Воды" />
+    <meta property="og:locale" content={lang === 'ru' ? 'ru_RU' : 'en_US'} />
+    <meta property="og:locale:alternate" content={lang === 'ru' ? 'en_US' : 'ru_RU'} />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="CARGO 819" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={new URL(ogImage, site).toString()} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="CARGO 819 — логистика Китай-Россия" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={new URL(ogImage, site).toString()} />
+
+    <!-- Security: CSP via meta for static hosting fallback (headers file also) -->
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://www.googletagmanager.com https://mc.yandex.ru; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; media-src 'self' https: blob:; connect-src 'self' https://mc.yandex.ru https://www.google-analytics.com; frame-ancestors 'none'; base-uri 'self'; form-action 'self';" />
+    <meta http-equiv="Referrer-Policy" content="strict-origin-when-cross-origin" />
+    <meta http-equiv="X-Content-Type-Options" content="nosniff" />
+
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="apple-touch-icon" href="/favicon.svg" />
+    <link rel="manifest" href="/manifest.webmanifest" />
+
+    <!-- Fonts: preconnect + display swap -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Manrope:wght@600;700;800&display=swap" rel="stylesheet" />
+
+    <!-- Preload hero video poster -->
+    <link rel="preload" as="image" href="/images/hero-banner.jpg" />
+
+    <!-- JSON-LD -->
+    <script is:inline type="application/ld+json" set:html={JSON.stringify(jsonLdLocalBusiness)} />
+    <script is:inline type="application/ld+json" set:html={JSON.stringify(jsonLdFAQ)} />
+    <script is:inline type="application/ld+json" set:html={JSON.stringify(jsonLdBreadcrumb)} />
+
+    <!-- Yandex.Metrika placeholder (GDPR consent required) -->
+    <!-- Google tag placeholder -->
+  </head>
+  <body class="bg-white text-ink-900 antialiased">
+    <a href="#main" class="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[100] focus:bg-navy-900 focus:text-white focus:px-4 focus:py-2 focus:rounded-lg">
+      {lang === 'ru' ? 'Перейти к содержимому' : 'Skip to content'}
+    </a>
+    <slot />
+    <!-- Minimal JS for a11y & performance -->
+    <script is:inline>
+      // Reduced motion respect
+      try {
+        const m = window.matchMedia('(prefers-reduced-motion: reduce)');
+        if (m.matches) document.documentElement.classList.add('reduce-motion');
+        // close on escape handled in Header component
+      } catch {}
+    </script>
+    <style is:global>
+      .sr-only { position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap; border:0; }
+    </style>
+  </body>
+</html>

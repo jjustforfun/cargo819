@@ -1,0 +1,48 @@
+---
+import { ui } from '../i18n/ui';
+type Lang = 'ru'|'en';
+const { lang } = Astro.props as { lang: Lang };
+const t = (k: keyof typeof ui['ru']) => (ui[lang] as any)[k] ?? ui['ru'][k];
+---
+
+<section id="faq" class="py-16 lg:py-24 bg-surface-50 border-y border-line-200">
+  <div class="container-premium grid lg:grid-cols-[0.9fr_1.1fr] gap-10 lg:gap-12">
+    <div class="lg:sticky lg:top-28 self-start">
+      <div class="inline-flex items-center gap-2 rounded-full bg-white border border-line-200 px-3 py-1 text-xs font-bold tracking-wide uppercase text-navy-900">{t('faq.eyebrow')}</div>
+      <h2 class="mt-3 font-display font-extrabold text-[30px] lg:text-[42px] leading-[0.95] text-navy-900">{t('faq.title')}</h2>
+      <p class="mt-4 text-ink-700">{lang==='ru' ? 'Собрали честные ответы. Если не нашли — спросите менеджера.' : 'Honest answers. If not found — ask manager.'}</p>
+      <a href="#contacts" class="mt-6 inline-flex items-center gap-2 rounded-full bg-navy-900 hover:bg-navy-800 text-white font-bold px-6 py-3 transition-colors">
+        {lang==='ru' ? 'Задать вопрос' : 'Ask question'} <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.4 8.4 0 0 1-12 7.5L3 21l1.5-6A8.4 8.4 0 0 1 21 11.5z"/></svg>
+      </a>
+    </div>
+
+    <div class="grid gap-3" data-faq>
+      {[0,1,2,3,4,5].map(i => (
+        <details class="group rounded-2xl bg-white border border-line-200 open:shadow-lg open:shadow-navy-900/5 open:border-navy-900/10 transition-all" {...(i===0 ? {open:true} : {})}>
+          <summary class="flex cursor-pointer list-none items-center justify-between gap-4 px-6 py-5 font-semibold text-navy-900">
+            <span>{t(`faq.items.${i}.q` as any)}</span>
+            <span class="grid size-8 place-items-center rounded-full bg-surface-50 border border-line-200 group-open:bg-navy-900 group-open:text-white transition-colors shrink-0">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="group-open:rotate-45 transition-transform"><path d="M12 5v14"/><path d="M5 12h14"/></svg>
+            </span>
+          </summary>
+          <div class="px-6 pb-6 text-sm leading-relaxed text-ink-700">
+            {t(`faq.items.${i}.a` as any)}
+          </div>
+        </details>
+      ))}
+    </div>
+  </div>
+</section>
+
+<script>
+  // Exclusive accordion (only one open)
+  const faq = document.querySelector('[data-faq]');
+  if (faq) {
+    const details = faq.querySelectorAll('details');
+    details.forEach(d => {
+      d.addEventListener('toggle', () => {
+        if (d.open) details.forEach(o => { if (o !== d) o.open = false; });
+      });
+    });
+  }
+</script>

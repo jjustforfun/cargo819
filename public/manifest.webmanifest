@@ -1,0 +1,19 @@
+{
+  "name": "CARGO 819 — Логистика Китай–Россия–КМВ",
+  "short_name": "CARGO 819",
+  "description": "Грузоперевозки из Китая в Пятигорск, Кисловодск, Минеральные Воды. 20 лет. Расчёт за 15 минут.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#0B1D3A",
+  "theme_color": "#0B1D3A",
+  "lang": "ru",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}
