@@ -1,0 +1,77 @@
+---
+import { ui } from '../i18n/ui';
+type Lang = 'ru'|'en';
+const { lang } = Astro.props as { lang: Lang };
+const t = (k: keyof typeof ui['ru']) => (ui[lang] as any)[k] ?? ui['ru'][k];
+---
+
+<section id="about" class="py-16 lg:py-24 bg-white">
+  <div class="container-premium grid lg:grid-cols-[1.05fr_1fr] gap-10 lg:gap-12 items-center">
+    <!-- Images -->
+    <div class="relative">
+      <div class="relative rounded-[32px] overflow-hidden bg-surface-50 border border-line-200 shadow-xl">
+        <img src="/images/about-banner.jpg" alt="Склад CARGO 819 — погрузка" width="600" height="720" class="w-full h-[520px] lg:h-[620px] object-cover" loading="lazy" decoding="async" />
+        <!-- floating stats card -->
+        <div class="absolute bottom-4 left-4 right-4 sm:left-auto sm:right-4 sm:w-[280px] rounded-2xl bg-navy-900 text-white p-5 shadow-2xl">
+          <div class="flex items-baseline gap-2">
+            <span class="font-display font-extrabold text-[42px] leading-none">20+</span>
+            <span class="text-sm text-white/70 leading-tight">{t('about.years')}</span>
+          </div>
+          <div class="mt-3 h-px bg-white/15"></div>
+          <div class="mt-3 flex items-center justify-between">
+            <span class="text-sm font-semibold">8 400+ <span class="font-normal text-white/70">{t('about.clients')}</span></span>
+            <span class="inline-flex items-center gap-1 text-xs bg-emerald-500 text-white px-2 py-1 rounded-full font-bold">4.9 ★</span>
+          </div>
+        </div>
+      </div>
+      <!-- decor dots -->
+      <div class="hidden lg:block absolute -top-6 -right-6 w-24 h-24 opacity-20" aria-hidden="true" style="background: radial-gradient(circle, #0B1D3A 2px, transparent 2.5px); background-size: 14px 14px;"></div>
+      <div class="hidden lg:block absolute -bottom-6 -left-6 w-32 h-20 rounded-2xl bg-accent-500/10 border border-accent-500/20"></div>
+    </div>
+
+    <!-- Content -->
+    <div>
+      <div class="inline-flex items-center gap-2 rounded-full bg-navy-900 text-white px-3 py-1 text-xs font-bold tracking-wide uppercase">
+        <span class="size-1.5 rounded-full bg-accent-500"></span>{t('about.eyebrow')}
+      </div>
+      <h2 class="mt-4 font-display font-extrabold text-[32px] lg:text-[44px] leading-[0.95] tracking-tight text-navy-900 text-balance">
+        {t('about.title')}
+      </h2>
+      <p class="mt-4 text-[16px] lg:text-[18px] leading-relaxed text-ink-700">
+        {t('about.text')}
+      </p>
+
+      <ul class="mt-8 grid gap-4">
+        {[0,1,2].map(i => (
+          <li class="flex gap-4 rounded-2xl border border-line-200 bg-surface-50 p-4 hover:bg-white hover:shadow-lg hover:shadow-navy-900/5 transition-all">
+            <span class="grid size-10 place-items-center rounded-xl bg-white border border-line-200 text-navy-900 shrink-0 shadow-sm">
+              {i===0 && <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 8c-2 0-4 1-4 3s2 3 4 3 4-1 4-3-2-3-4-3z"/><path d="M20 12a8 8 0 1 1-16 0 8 8 0 0 1 16 0z"/></svg>}
+              {i===1 && <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.9"/><path d="M16 3.1a4 4 0 0 1 0 7.8"/></svg>}
+              {i===2 && <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M9 12l2 2 4-4"/></svg>}
+            </span>
+            <div>
+              <div class="font-semibold text-navy-900">{t(`about.bullets.${i}.title` as any)}</div>
+              <div class="text-sm text-ink-500 leading-relaxed">{t(`about.bullets.${i}.desc` as any)}</div>
+            </div>
+          </li>
+        ))}
+      </ul>
+
+      <div class="mt-8 flex flex-wrap gap-3">
+        <a href="#contacts" class="inline-flex items-center gap-2 rounded-full bg-navy-900 hover:bg-navy-800 text-white font-bold px-6 py-3 shadow-lg transition-colors">
+          {t('about.cta')} <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14"/><path d="M13 5l7 7-7 7"/></svg>
+        </a>
+        <a href="tel:+79650693173" class="inline-flex items-center gap-2 rounded-full border border-line-200 bg-white hover:bg-surface-50 text-navy-900 font-semibold px-6 py-3 transition-colors">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6 19.8 19.8 0 0 1-3.1-8.7A2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7l.5 3a2 2 0 0 1-.6 1.8L8 10a16 16 0 0 0 6 6l1.5-1a2 2 0 0 1 1.8-.6l3 .5A2 2 0 0 1 22 16.9z"/></svg>
+          +7 965 069-31-73
+        </a>
+      </div>
+
+      <div class="mt-6 flex items-center gap-3 text-xs text-ink-500">
+        <span class="inline-flex items-center gap-1.5"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#16a34a" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>{lang==='ru'? 'Работаем по договору' : 'Contract-based'}</span>
+        <span class="size-1 rounded-full bg-line-200"></span>
+        <span class="inline-flex items-center gap-1.5"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#16a34a" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>{lang==='ru'? 'Оплата по факту' : 'Pay on fact'}</span>
+      </div>
+    </div>
+  </div>
+</section>

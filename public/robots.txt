@@ -1,0 +1,8 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://cargo819.ru/sitemap-index.xml
+Sitemap: https://cargo819.ru/sitemap-0.xml
+
+# GEO
+# Host: https://cargo819.ru

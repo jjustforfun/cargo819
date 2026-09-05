@@ -1,0 +1,105 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Header from '../../components/Header.astro';
+import Hero from '../../components/Hero.astro';
+import About from '../../components/About.astro';
+import Services from '../../components/Services.astro';
+import Process from '../../components/Process.astro';
+import Geo from '../../components/Geo.astro';
+import Projects from '../../components/Projects.astro';
+import Testimonials from '../../components/Testimonials.astro';
+import FAQ from '../../components/FAQ.astro';
+import Contact from '../../components/Contact.astro';
+import Footer from '../../components/Footer.astro';
+import { ui } from '../../i18n/ui';
+
+const lang = 'en' as const;
+const t = (k: keyof typeof ui['ru']) => (ui[lang] as any)[k] ?? ui['ru'][k];
+const title = t('meta.title');
+const description = t('meta.description');
+const canonical = 'https://cargo819.ru/en/';
+---
+
+<Layout title={title} description={description} lang={lang} canonical={canonical}>
+  <Header lang={lang} />
+  <main id="main">
+    <Hero lang={lang} />
+
+    <section class="bg-white border-y border-line-200 py-6">
+      <div class="container-premium flex flex-col lg:flex-row lg:items-center justify-between gap-4">
+        <div class="flex items-center gap-3">
+          <span class="hidden sm:grid size-8 place-items-center rounded-full bg-navy-900 text-white"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><path d="M12 2l3 7h7l-5.5 4 2 7L12 16l-6.5 4 2-7L2 9h7z"/></svg></span>
+          <div>
+            <div class="text-xs font-bold tracking-wide uppercase text-ink-500">{t('trust.eyebrow')}</div>
+            <div class="font-semibold text-navy-900 leading-tight">{t('trust.title')}</div>
+          </div>
+        </div>
+        <div class="flex flex-wrap gap-2">
+          {[0,1,2,3].map(i => (
+            <span class="inline-flex items-center gap-1.5 rounded-full bg-surface-50 border border-line-200 px-3 py-2 text-xs font-semibold text-navy-900">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#16a34a" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>
+              {t(`trust.badges.${i}` as any)}
+            </span>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <About lang={lang} />
+    <Services lang={lang} />
+
+    <section class="py-12 lg:py-16 bg-navy-900 text-white relative overflow-hidden">
+      <div class="absolute inset-0 opacity-10" style="background: radial-gradient(600px 300px at 20% 0%, #FF6A00 0%, transparent 60%);"></div>
+      <div class="relative container-premium grid lg:grid-cols-3 gap-6">
+        {[0,1,2].map(i => (
+          <div class="rounded-[20px] bg-white/10 backdrop-blur border border-white/10 p-6">
+            <div class="size-10 rounded-xl bg-accent-500 grid place-items-center text-white font-extrabold">0{i+1}</div>
+            <h3 class="mt-4 font-display font-bold text-lg leading-tight">{t(`features.cards.${i}.title` as any)}</h3>
+            <p class="mt-2 text-sm text-white/70 leading-relaxed">{t(`features.cards.${i}.desc` as any)}</p>
+          </div>
+        ))}
+      </div>
+    </section>
+
+    <Process lang={lang} />
+    <Geo lang={lang} />
+    <Projects lang={lang} />
+    <Testimonials lang={lang} />
+    <FAQ lang={lang} />
+    <Contact lang={lang} />
+
+    <section class="py-10 bg-accent-500">
+      <div class="container-premium flex flex-col lg:flex-row items-center justify-between gap-6">
+        <div class="text-white">
+          <div class="font-display font-extrabold text-[24px] lg:text-[28px] leading-tight">Ready to ship? Quote in 15 min — free</div>
+          <div class="text-white/90 mt-1">Send invoice or 1688 link. We’ll reply with breakdown.</div>
+        </div>
+        <div class="flex gap-3 shrink-0">
+          <a href="#contacts" class="inline-flex items-center gap-2 rounded-full bg-white text-navy-900 font-bold px-7 py-4 shadow-lg hover:bg-zinc-50 transition-colors">
+            Get quote <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14"/><path d="M13 5l7 7-7 7"/></svg>
+          </a>
+          <a href="tel:+79650693173" class="hidden sm:inline-flex items-center gap-2 rounded-full bg-navy-900 text-white font-bold px-7 py-4 hover:bg-navy-800 transition-colors">
+            Call
+          </a>
+        </div>
+      </div>
+    </section>
+  </main>
+  <Footer lang={lang} />
+
+  <a href="#home" id="back-top" class="fixed bottom-6 right-6 hidden size-12 place-items-center rounded-full bg-navy-900 text-white shadow-xl hover:bg-navy-800 transition-colors z-40" aria-label="Back to top">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 15l-6-6-6 6"/></svg>
+  </a>
+</Layout>
+
+<script>
+  const back = document.getElementById('back-top');
+  if (back) {
+    const onScroll = () => {
+      if (window.scrollY > 600) { back.classList.remove('hidden'); back.classList.add('grid'); }
+      else { back.classList.add('hidden'); back.classList.remove('grid'); }
+    };
+    window.addEventListener('scroll', onScroll, {passive:true});
+    onScroll();
+  }
+</script>

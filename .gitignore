@@ -1,1 +1,9 @@
+dist/
+node_modules/
+.astro/
+.env
+.env.*
+!.env.example
 .DS_Store
+*.log
+coverage/

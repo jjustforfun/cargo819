@@ -1,0 +1,59 @@
+---
+import { ui } from '../i18n/ui';
+type Lang = 'ru'|'en';
+const { lang } = Astro.props as { lang: Lang };
+const t = (k: keyof typeof ui['ru']) => (ui[lang] as any)[k] ?? ui['ru'][k];
+const cards = [0,1,2,3,4,5];
+---
+
+<section id="service" class="py-16 lg:py-24 bg-surface-50 border-y border-line-200">
+  <div class="container-premium">
+    <div class="max-w-3xl">
+      <div class="inline-flex items-center gap-2 rounded-full bg-white border border-line-200 px-3 py-1 text-xs font-bold tracking-wide uppercase text-navy-900">
+        <span class="size-1.5 rounded-full bg-accent-500"></span>{t('services.eyebrow')}
+      </div>
+      <h2 class="mt-3 font-display font-extrabold text-[30px] lg:text-[44px] leading-[0.95] text-navy-900 text-balance">{t('services.title')}</h2>
+      <p class="mt-4 text-ink-700 leading-relaxed">{t('services.subtitle')}</p>
+    </div>
+
+    <div class="mt-10 grid md:grid-cols-2 lg:grid-cols-3 gap-5 lg:gap-6">
+      {cards.map(i => (
+        <article class="group relative flex flex-col rounded-[24px] bg-white border border-line-200 p-6 lg:p-7 hover:shadow-xl hover:shadow-navy-900/5 hover:border-navy-900/10 hover:-translate-y-1 transition-all">
+          <div class="flex items-start justify-between">
+            <div class="grid size-12 place-items-center rounded-xl bg-navy-900 text-white shadow-lg shadow-navy-900/10">
+              {i===0 && <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><rect x="1" y="7" width="15" height="10" rx="2"/><path d="M16 11h4l3 4v2h-7z"/><circle cx="5.5" cy="17.5" r="2.5"/><circle cx="18.5" cy="17.5" r="2.5"/></svg>}
+              {i===1 && <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><path d="M3 8l7-5 7 5v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><path d="M9 21V12h6v9"/></svg>}
+              {i===2 && <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><path d="M13 2L3 14h7l-1 8 10-12h-7l1-8z"/></svg>}
+              {i===3 && <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><path d="M3 9h18v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><path d="M3 9V5a2 2 0 0 1 2-2h2"/><path d="M9 22V12h6v10"/></svg>}
+              {i===4 && <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/><path d="M10 13H8"/><path d="M16 17H8"/><path d="M13 13h-1"/></svg>}
+              {i===5 && <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M9 12l2 2 4-4"/></svg>}
+            </div>
+            <span class="text-xs font-bold tracking-widest text-ink-500 bg-surface-50 border border-line-200 px-2.5 py-1 rounded-full">0{i+1}</span>
+          </div>
+          <h3 class="mt-5 font-display font-bold text-[18px] leading-tight text-navy-900">{t(`services.cards.${i}.title` as any)}</h3>
+          <p class="mt-2 text-sm leading-relaxed text-ink-500">{t(`services.cards.${i}.desc` as any)}</p>
+          <div class="mt-4 flex flex-wrap gap-1.5">
+            {(t(`services.cards.${i}.points` as any) as string).split('|').map(p=> (
+              <span class="inline-flex items-center rounded-full bg-navy-900 text-white text-[11px] font-semibold px-2.5 py-1">{p}</span>
+            ))}
+          </div>
+          <div class="mt-6 flex items-center gap-2 text-sm font-bold text-navy-900 group-hover:text-accent-600 transition-colors">
+            <a href="#contacts" class="inline-flex items-center gap-2">
+              {t('services.link')} <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14"/><path d="M13 5l7 7-7 7"/></svg>
+            </a>
+          </div>
+        </article>
+      ))}
+    </div>
+
+    <div class="mt-8 rounded-[20px] bg-navy-900 text-white p-6 lg:p-8 flex flex-col lg:flex-row lg:items-center justify-between gap-4">
+      <div>
+        <div class="font-display font-bold text-lg"> {lang==='ru' ? 'Не знаете, что выбрать? Подберём за 15 минут' : 'Not sure what to choose? We’ll match in 15 min'}</div>
+        <div class="text-white/70 text-sm mt-1">{lang==='ru' ? 'Пришлите инвойс — посчитаем все варианты: авто, ЖД, экспресс.' : 'Send invoice — we’ll calculate all options: road, rail, express.'}</div>
+      </div>
+      <a href="#contacts" class="inline-flex items-center justify-center gap-2 rounded-full bg-accent-500 hover:bg-accent-600 text-white font-bold px-6 py-3 shrink-0 transition-colors">
+        {t('services.cta')} <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14"/><path d="M13 5l7 7-7 7"/></svg>
+      </a>
+    </div>
+  </div>
+</section>
